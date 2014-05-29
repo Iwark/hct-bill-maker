@@ -110,7 +110,7 @@ app.on('ready', function() {
     sheet.name = writer["name"];
     sheet.columnsWidth = [];
     for(var i=0; i<22; i++)
-      sheet.columnsWidth[i] = 1.6;
+      sheet.columnsWidth[i] = 1.8;
 
     sheet.setCell('B2', '御　請　求　書');
     sheet.setCellStyle(1, 1, '20B');
@@ -147,7 +147,7 @@ app.on('ready', function() {
     sheet.setCell('O10', writer["name"]);
     sheet.setCellStyle(9, 14, '12');
 
-    //銀行
+    // 銀行
 
     sheet.setCell('B11', '振込先銀行');
     sheet.mergeCells([10,1],[10,3]);
@@ -176,6 +176,65 @@ app.on('ready', function() {
     sheet.setCell('E14', 'オオサワリエ');
     sheet.mergeCells([13,4],[13,8]);
     sheet.setCellStyle(13, 4, '14BU');
+
+    // 金額
+    sheet.setCell('B16', '合計金額');
+    sheet.mergeCells([15,1],[15,7]);
+    sheet.setCellStyle(15, 1, '24C');
+
+    sheet.setCell('I16', '¥5,387');
+    sheet.mergeCells([15,8],[15,11]);
+    sheet.setCellStyle(15, 8, '24C');
+
+    sheet.setCell('B17', '摘要');
+    sheet.mergeCells([16,1],[16,7]);
+    sheet.setCellStyle(16, 1, '12C');
+
+    sheet.setCell('I17', '数量');
+    sheet.mergeCells([16,8],[16,9]);
+    sheet.setCellStyle(16, 8, '12C');
+
+    sheet.setCell('K17', '単価');
+    sheet.mergeCells([16,10],[16,12]);
+    sheet.setCellStyle(16, 10, '12C');
+
+    sheet.setCell('N17', '金額(税抜)');
+    sheet.mergeCells([16,13],[16,17]);
+    sheet.setCellStyle(16, 13, '12C');
+
+    sheet.setCell('S17', '備考');
+    sheet.mergeCells([16,18],[16,20]);
+    sheet.setCellStyle(16, 18, '12C');
+
+    sheet.setCell('C18', '原稿料(x月分)');
+    sheet.setCell('I18', 'x');
+    sheet.setCell('K18', 'yyyy');
+    sheet.setCell('N18', 'zzzz');
+    sheet.setCell('S18', '');
+
+    for(var i=18; i<31; i++){
+      if(i-17 <= 10){
+        sheet.setCell('B'+i, ''+(i-17));
+        sheet.setCellStyle(i-1, 1, '12C');
+      }
+      for(var t=1;t<20; t++){
+        sheet.setCellStyle(i-1, t, '12C');
+      }
+      if(i!=30)
+        sheet.mergeCells([i-1,2],[i-1,7]);
+      else
+        sheet.mergeCells([i-1,1],[i-1,7]);
+      sheet.mergeCells([i-1,8],[i-1,9]);
+      sheet.mergeCells([i-1,10],[i-1,12]);
+      sheet.mergeCells([i-1,13],[i-1,17]);
+      sheet.mergeCells([i-1,18],[i-1,20]);
+    }
+    sheet.setCell('C28', '小計');
+    sheet.setCell('C29', '源泉徴収税(10.21%)');
+    sheet.setCell('N28', '¥6,000');
+    sheet.setCell('N29', '¥-613');
+    sheet.setCell('B30', '合計');
+    sheet.setCell('N30', '¥5,387');
 
   }
 
