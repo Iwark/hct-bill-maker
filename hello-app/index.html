@@ -1,11 +1,55 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    We are using node.js <script>document.write(process.version)</script>
-    and atom-shell <script>document.write(process.versions['atom-shell'])</script>.
-  </body>
+<head>
+	<meta charset="utf-8">
+	<title>ハウコレ請求書パティシエ</title>
+</head>
+<body>
+	<h1>ハウコレ請求書パティシエ</h1>
+	<ul>
+		<li>1. エクセルファイルを読み込む</li>
+		<li>2. 請求書を印刷する</li>
+	</ul>
+	
+	<button id="fileOpenBtn">読み込む</button>
+
+	<script>
+		var ipc = require('ipc');
+
+		ipc.on('asynchronous-reply', function(writers) {
+			var contents = "<table><tr><th>名前</th><th>数</th><th>単価</th><th>請求額</th></tr>";
+			writers.forEach(function(writer){
+				if(writer["num"] && writer["num"] > 0){
+					contents += "<tr>";
+					contents += "<td>";
+					contents += writer["name"];
+					contents += "</td>";
+					contents += "<td>";
+					contents += writer["num"];
+					contents += "</td>";
+					contents += "<td>";
+					contents += writer["price"];
+					contents += "</td>";
+					contents += "<td>";
+					contents += writer["sum"];
+					contents += "</td>";
+					contents += "</tr>";
+				}
+			});
+			contents += "</table>";
+
+			var writers_area = document.getElementById("writers");
+      writers_area.innerHTML = contents;
+
+    });
+
+		var fileOpenBtn = document.getElementById("fileOpenBtn");
+		fileOpenBtn.addEventListener("click", function() {
+      // main.js側に同期イベントを送る。
+      ipc.sendSync('openFileDialog');
+    });
+	</script>
+	<div id="writers">
+	</div>
+</body>
 </html>

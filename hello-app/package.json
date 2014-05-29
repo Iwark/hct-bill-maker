@@ -1,5 +1,9 @@
 {
   "name": "hello-app",
   "version": "0.1.0",
-  "main": "main.js"
+  "main": "main.js",
+  "devDependencies": {
+  	"officegen": "Iwark/officegen",
+  	"pyspreadsheet": "*"
+  }
 }
